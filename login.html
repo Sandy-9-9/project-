@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In / Sign Up</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style1.css">
+
+    <style>
+        /* SAME HEIGHT & WIDTH FOR ALL INPUTS */
+.auth-form-box input {
+    width: 100%;
+    height: 48px;                 /* 🔥 FIXED HEIGHT */
+    padding: 0 45px 0 16px;       /* right padding for eye icon space */
+    font-size: 14px;
+    border-radius: 10px;
+    border: none;
+    background: #f3f3f3;
+    box-sizing: border-box;
+}
+
+/* PASSWORD WRAPPER FIX */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* EYE ICON POSITION */
+.password-wrapper i {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777;
+    font-size: 14px;
+}
+        /* SAME SIZE INPUTS */
+        .auth-form-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        /* PASSWORD EYE (LOGIN ONLY) */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="auth-wrapper" id="authWrapper">
+
+    <!-- ================= SIGN UP ================= -->
+    <div class="auth-form-box register-form-box">
+        <form onsubmit="return false;">
+            <h1>Create Account</h1>
+
+            <span>or use your email for registration</span>
+
+            <input type="text" id="regName" placeholder="Full Name">
+            <input type="email" id="regEmail" placeholder="Email Address">
+            <input type="password" id="regPassword" placeholder="Password">
+
+            <button type="button" id="signUpSubmit">Sign Up</button>
+
+            <div class="mobile-switch">
+                <p>Already have an account?</p>
+                <button type="button" id="mobileLoginBtn">Sign In</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ================= LOGIN ================= -->
+    <div class="auth-form-box login-form-box">
+        <form onsubmit="return false;">
+            <h1>Sign In</h1>
+
+            <span>or use your account</span>
+
+            <input type="email" id="loginEmail" placeholder="Email Address">
+
+            <!-- PASSWORD WITH EYE (LOGIN ONLY) -->
+            <div class="password-wrapper">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <i class="fa fa-eye" onclick="togglePassword()"></i>
+            </div>
+
+            <button type="button" id="loginSubmit">Log In</button>
+
+            <div class="mobile-switch">
+                <p>Don't have an account?</p>
+                <button type="button" id="mobileRegisterBtn">Sign Up</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ================= SLIDE PANEL ================= -->
+    <div class="slide-panel-wrapper">
+        <div class="slide-panel">
+            <div class="panel-content panel-content-left">
+                <h1>Welcome Back!</h1>
+                <p>Stay connected by logging in with your credentials</p>
+                <button type="button" class="transparent-btn" id="loginBtn">Sign In</button>
+            </div>
+
+            <div class="panel-content panel-content-right">
+                <h1>Hey There!</h1>
+                <p>Create an account to begin your journey</p>
+                <button type="button" class="transparent-btn" id="registerBtn">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+const authWrapper = document.getElementById("authWrapper");
+
+/* PANEL TOGGLE */
+loginBtn.onclick = () => authWrapper.classList.remove("panel-active");
+registerBtn.onclick = () => authWrapper.classList.add("panel-active");
+mobileLoginBtn.onclick = () => authWrapper.classList.remove("panel-active");
+mobileRegisterBtn.onclick = () => authWrapper.classList.add("panel-active");
+
+/* PASSWORD TOGGLE (LOGIN ONLY) */
+function togglePassword() {
+    const pwd = document.getElementById("loginPassword");
+    const icon = event.target;
+
+    if (pwd.type === "password") {
+        pwd.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        pwd.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
+    }
+}
+
+/* GMAIL VALIDATION */
+function isValidGmail(email) {
+    return /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email);
+}
+
+/* SIGN UP VALIDATION */
+signUpSubmit.onclick = () => {
+    const name = regName.value.trim();
+    const email = regEmail.value.trim();
+    const password = regPassword.value.trim();
+
+    if (!name || !email || !password) {
+        alert("All fields are required!");
+        return;
+    }
+
+    if (!isValidGmail(email)) {
+        alert("Email must be a valid @gmail.com address!");
+        return;
+    }
+
+    window.location.href = "login.html";
+};
+
+/* LOGIN VALIDATION */
+loginSubmit.onclick = () => {
+    const email = loginEmail.value.trim();
+    const password = loginPassword.value.trim();
+
+    if (!email || !password) {
+        alert("Email and Password are required!");
+        return;
+    }
+
+    if (!isValidGmail(email)) {
+        alert("Email must be a valid @gmail.com address!");
+        return;
+    }
+
+    window.location.href = "index.html";
+};
+</script>
+
+</body>
+</html>

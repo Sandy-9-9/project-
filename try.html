@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Cloth Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-gray-100">
+
+<!-- ================= HEADER ================= -->
+<header class="text-gray-400 bg-gray-900 body-font">
+    <div class="container mx-auto flex p-5 items-center">
+        <center><span class="ml-5 text-4xl font-semibold text-white">
+            Virtual Cloth Assistant
+        </span></center>
+    </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="text-gray-400 bg-gray-900 body-font">
+    <div class="container px-5 py-16 mx-auto text-center">
+        <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+            Wanna try out how that cloth suits you?
+            <br> Upgrade your shopping experience with an intelligent trial room.
+        </p>
+        <div class="flex mt-6 justify-center">
+            <div class="w-16 h-1 rounded-full bg-blue-500"></div>
+        </div>
+    </div>
+</section>
+<!-- ================= FORM ================= -->
+<section class="bg-gray-900 body-font">
+<form action="http://127.0.0.1:5000" method="POST" enctype="multipart/form-data">
+    <div class="container mx-auto px-5 py-10 flex flex-col items-center">
+
+        <div class="flex flex-wrap w-full">
+
+ <!-- CLOTH -->
+<div class="w-full md:w-1/2 p-4">
+    <label for="cloth-upload" class="block text-center mb-2 font-semibold">
+        Cloth Image
+    </label>
+    <div class="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
+        <img id="cloth-preview" alt="Cloth preview" class="hidden mx-auto mb-3 max-h-40 rounded" />
+        <input type="file"
+               name="cloth"
+               id="cloth-upload"
+               accept="image/*"
+               required
+               title="Upload cloth image"
+               class="block w-full text-sm file:bg-blue-600 file:text-white file:px-4 file:py-2 file:rounded">
+    </div>
+</div>
+
+<!-- MODEL -->
+<div class="w-full md:w-1/2 p-4">
+    <label for="model-upload" class="block text-center mb-2 font-semibold">
+        Model Image
+    </label>
+    <div class="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
+        <img id="model-preview" alt="Model preview" class="hidden mx-auto mb-3 max-h-40 rounded" />
+        <input type="file"
+               name="model"
+               id="model-upload"
+               accept="image/*"
+               required
+               title="Upload model image"
+               class="block w-full text-sm file:bg-blue-600 file:text-white file:px-4 file:py-2 file:rounded">
+    </div>
+</div>
+
+        <div class="text-center mt-10">
+            <button type="submit"
+                class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded text-lg font-semibold">
+                Try It 👗
+            </button>
+        </div>
+
+    </div>
+</form>
+</section>
+
+<!-- ================= RESULT ================= -->
+
+<section class="bg-gray-900 py-16">
+    <h2 class="text-center text-3xl font-bold mb-8">
+        HERE IS YOUR RESULT 
+    </h2>
+    <img src="data:image/png;base64,{{ op }}" alt="output image"
+         class="mx-auto rounded-lg shadow-lg max-w-md">
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-gray-800 text-gray-400 py-6 text-center">
+    © 2025 Virtual Cloth Assistant — Final Year Project
+</footer>
+
+<!-- ================= PREVIEW SCRIPT ================= -->
+<script>
+function preview(inputId, imgId) {
+    const input = document.getElementById(inputId);
+    const img = document.getElementById(imgId);
+    input.addEventListener("change", () => {
+        const file = input.files[0];
+        if (!file) return;
+        img.src = URL.createObjectURL(file);
+        img.classList.remove("hidden");
+    });
+}
+preview("cloth-upload", "cloth-preview");
+preview("model-upload", "model-preview");
+</script>
+
+</body>
+</html>
