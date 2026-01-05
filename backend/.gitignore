@@ -1,0 +1,10 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Uploaded files (keep folder only)
+uploads/*
+!uploads/.gitkeep
